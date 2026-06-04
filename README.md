@@ -10,13 +10,26 @@ isolada na propria pasta.
 Como a aplicacao usa ES Modules, sirva os arquivos por HTTP:
 
 ```bash
-busybox httpd -p 0.0.0.0:8000 -h .
+./start.sh
 ```
 
 Depois acesse:
 
 ```text
 http://127.0.0.1:8000/
+```
+
+Para parar:
+
+```bash
+./stop.sh
+```
+
+Tambem e possivel mudar host e porta:
+
+```bash
+HOST=127.0.0.1 PORT=8010 ./start.sh
+PORT=8010 ./stop.sh
 ```
 
 Qualquer servidor estatico equivalente tambem funciona.
@@ -54,6 +67,11 @@ permitidos no projeto.
 - Categorias em accordions nativos com `details` e `summary`.
 - Grid responsivo para aproveitar monitores ultrawide.
 - Modal de ajuda na calculadora parabolica explicando eficiencia estimada.
+- Modal de ajuda na calculadora Yagi explicando frequencia, diametros,
+  diretores, boom isolado, isolador minimo e posicao no boom.
+- Calculadora Yagi baseada em diretrizes dimensionais classicas popularizadas
+  por Karl Rothammel, com diametro dos parasitas, diametro do boom, ganho em
+  dBd/dBi e toggle para boom isolado ou metalico nao isolado.
 
 ## Assets
 
@@ -92,6 +110,8 @@ assets/schematics/yagi-basic-format.svg
 │   └── calculators.test.mjs
 ├── index.html
 ├── package.json
+├── start.sh
+├── stop.sh
 ├── styles.css
 └── README.md
 ```
@@ -160,6 +180,20 @@ Os componentes herdam variaveis CSS globais como `--panel`, `--text`, `--line`,
 - Toda calculadora deve ter teste unitario cobrindo seu calculo principal.
 - Unidades de comprimento devem ser metricas.
 
+## Notas de Calculo
+
+- Yagi: usa diretrizes dimensionais classicas de Yagi-Uda popularizadas por
+  Karl Rothammel: refletor maior que o elemento excitado, diretores
+  progressivamente menores e espacamentos em fracoes de lambda. O toggle de
+  boom isolado aplica ou remove uma compensacao dimensional simples para boom
+  metalico nos elementos parasitas. Quando o boom esta isolado, o resultado
+  `Isolador minimo` sugere uma espessura inicial para afastar eletricamente os
+  parasitas do boom, usando metade do diametro do boom como referencia pratica.
+- Ground Plane: usa 4 radiais fixos. A quantidade fica explicita na interface,
+  mas nao e um parametro de calculo.
+- Parabolica: diametro e profundidade usam centimetros por padrao; eficiencia
+  estimada e explicada no modal de ajuda.
+
 ## Adicionando Uma Calculadora
 
 1. Crie `components/nome-da-calculadora/`.
@@ -184,7 +218,7 @@ Cobertura atual:
 
 - Dipolo
 - Ground Plane
-- Yagi
+- Yagi Rothammel dimensional
 - Parabolica
 - Passa baixa RC
 - Passa alta RC

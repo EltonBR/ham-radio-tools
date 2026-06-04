@@ -40,17 +40,34 @@ test("ground plane calculator returns quarter-wave radiator and four radials", (
   assert.equal(result.radialCount, 4);
 });
 
-test("yagi calculator returns element dimensions, director positions, and gain", () => {
+test("yagi calculator follows Rothammel dimensional guidelines", () => {
   const frequencyHz = yagiFrequencyToHz(146, "mhz");
-  const result = calculateYagi(frequencyHz, 0.95, 4);
+  const result = calculateYagi(frequencyHz, 10, 20, 3, true);
   const wavelength = SPEED_OF_LIGHT / frequencyHz;
-  const driven = (wavelength / 2) * 0.95;
+  const drivenElement = wavelength * 0.475;
 
-  approx(result.reflector, driven * 1.05);
-  approx(result.drivenElement, driven);
-  assert.equal(result.directors.length, 4);
-  approx(result.directors[3].position, wavelength * 0.2 + wavelength * 0.15 * 4);
-  approx(result.estimatedGainDbi, 10.4);
+  approx(result.wavelength, wavelength);
+  approx(result.drivenElement, drivenElement);
+  approx(result.reflectorLength, drivenElement * 1.05);
+  approx(result.dipolePosition, wavelength * 0.2);
+  approx(result.directors[0].length, drivenElement * 0.95);
+  approx(result.directors[0].position, wavelength * 0.35);
+  approx(result.directors[0].distanceFromPrevious, wavelength * 0.15);
+  approx(result.directors[2].length, drivenElement * 0.93);
+  approx(result.directors[2].position, wavelength * 0.75);
+  approx(result.boomLength, wavelength * 0.75);
+  assert.ok(result.gainDbd > 5.2);
+});
+
+test("yagi calculator applies metal boom correction when elements are not isolated", () => {
+  const frequencyHz = yagiFrequencyToHz(146, "mhz");
+  const isolated = calculateYagi(frequencyHz, 10, 20, 1, true);
+  const notIsolated = calculateYagi(frequencyHz, 10, 20, 1, false);
+
+  assert.ok(notIsolated.reflectorLength > isolated.reflectorLength);
+  assert.ok(notIsolated.directors[0].length > isolated.directors[0].length);
+  assert.ok(notIsolated.boomCorrection > 0);
+  assert.equal(notIsolated.boomIsolated, false);
 });
 
 test("parabolic calculator returns focal distance, F/D, and approximate gain", () => {
