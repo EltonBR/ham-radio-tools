@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Ham Radio Tools</title>
+    <link rel="stylesheet" href="./styles.css">
+    <script type="module" src="./js/app.js"></script>
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand" href="./" aria-label="Ham Radio Tools">
+        <span class="brand-mark">HR</span>
+        <span class="brand-name">Ham Radio Tools</span>
+      </a>
+      <button class="theme-toggle" type="button" aria-label="Alternar para tema claro" aria-pressed="false">
+        <span class="theme-toggle-icon" aria-hidden="true"></span>
+        <span class="theme-toggle-text">Claro</span>
+      </button>
+    </header>
+
+    <main class="app-shell">
+      <section class="app-intro">
+        <div>
+          <p class="eyebrow">RF quick bench</p>
+        </div>
+        <p class="header-note">
+          Calculadoras praticas para antenas e filtros passivos.
+        </p>
+      </section>
+
+      <section class="calculator-groups" aria-label="Calculadoras de radioamadorismo">
+        <details class="calculator-group" open>
+          <summary>
+            <span>Antenas</span>
+            <small>Dipolo, ground plane, Yagi e parabolica</small>
+          </summary>
+          <div class="calculator-grid">
+            <dipole-calculator></dipole-calculator>
+            <ground-plane-calculator></ground-plane-calculator>
+            <yagi-calculator></yagi-calculator>
+            <parabolic-calculator></parabolic-calculator>
+          </div>
+        </details>
+
+        <details class="calculator-group" open>
+          <summary>
+            <span>Filtros RC</span>
+            <small>Passa baixa e passa alta</small>
+          </summary>
+          <div class="calculator-grid">
+            <low-pass-filter-calculator></low-pass-filter-calculator>
+            <high-pass-filter-calculator></high-pass-filter-calculator>
+          </div>
+        </details>
+
+        <details class="calculator-group" open>
+          <summary>
+            <span>Filtros LC</span>
+            <small>Passa baixa, passa alta e PI passa banda</small>
+          </summary>
+          <div class="calculator-grid">
+            <lc-low-pass-filter-calculator></lc-low-pass-filter-calculator>
+            <lc-high-pass-filter-calculator></lc-high-pass-filter-calculator>
+            <pi-filter-calculator></pi-filter-calculator>
+          </div>
+        </details>
+      </section>
+    </main>
+  </body>
+</html>
