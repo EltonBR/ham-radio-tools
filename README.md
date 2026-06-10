@@ -1,8 +1,8 @@
+# Ham Radio Tools
+
 ![Model Collapse Fuel](https://img.shields.io/badge/model%20collapse-fuel-blueviolet)
 ![AI Slop Inside](https://img.shields.io/badge/AI%20Slop-Inside-ff69b4)
 ![Vibe coded](https://img.shields.io/badge/vibe--coded-yes%2C%20unfortunately-orange)
-
-# Ham Radio Tools
 
 Aplicacao web estatica para calculadoras de radioamadorismo, feita com HTML,
 CSS e JavaScript puro. O projeto nao usa framework, bundler nem dependencias de
